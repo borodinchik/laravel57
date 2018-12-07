@@ -9,10 +9,11 @@
 namespace App\Services;
 
 
-use App\Category;
+//use App\Category;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
-class  CategoryHelper
+class  CategoryService
 {
     const CATEGORY_LIST = 'list';
     const CATEGORY_TREE = 'tree';
@@ -38,9 +39,9 @@ class  CategoryHelper
 
     /**
      * @param $slug
-     * @return object
+     * @return JsonResponse
      */
-    public function getCategory($slug) : object
+    public function getCategory($slug) : JsonResponse
     {
         $categories = Category::all();
 
@@ -61,9 +62,9 @@ class  CategoryHelper
 
     /**
      * @param $request
-     * @return object
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function createNewCategory($request) : object
+    public function createNewCategory($request) : JsonResponse
     {
         $category = new Category();
         $category->title = $request->title;
@@ -90,5 +91,10 @@ class  CategoryHelper
         $categoryAndChildren = Category::with('children')->findOrFail($id);
         $result = ($slug == true) ? $categoryAndChildren : $category;
         return response()->json(['category' => $result], Response::HTTP_OK);
+    }
+
+    public function hello($str)
+    {
+        return $str;
     }
 }

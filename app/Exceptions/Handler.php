@@ -4,10 +4,12 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
-    use ExceptionTrait;
+    use JsonResponse;
     /**
      * A list of the exception types that are not reported.
      *
@@ -47,6 +49,15 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return $this->apiResponseException($request, $exception);
+        if ($exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+            return $this->getModelJsonResponseException();
+        } elseif ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+            return $this->getHttpJsonResponseException();
+        } elseif ($exception instanceof ValidationException){
+            return $this->getValidationJsonResponseException($exception);
+        }
+        return $this->getBadRequestJsonResponseException($exception);
+//        return parent::render($request, $exception);
     }
+
 }

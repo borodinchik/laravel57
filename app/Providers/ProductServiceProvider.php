@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Services\ProductHelper;
+use App\Services\ProductService;
 use Illuminate\Support\ServiceProvider;
 
 class ProductServiceProvider extends ServiceProvider
@@ -24,9 +24,9 @@ class ProductServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(ProductHelper::class, function ()
+        $this->app->bind(ProductService::class, function ()
         {
-            return new ProductHelper();
+            return new ProductService();
         });
     }
 }

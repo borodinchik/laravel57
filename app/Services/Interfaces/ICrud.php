@@ -11,13 +11,13 @@ namespace App\Services\Interfaces;
 
 interface ICrud
 {
-    public function index();
+    public function getCollection();
 
-    public function store();
+    public function saveNewObj($request);
 
-    public function show();
+    public function getObjById(int $id);
 
-    public function update();
+    public function updateObj(int $id);
 
-    public function delete();
+    public function deleteObj(int $int);
 }

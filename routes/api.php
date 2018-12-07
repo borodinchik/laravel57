@@ -41,4 +41,7 @@ Route::group(['prefix' => 'category'], function ()
 Route::group(['prefix' => 'product'], function()
 {
     Route::get('/all', 'API\ProductController@index');
+    Route::post('/create', 'API\ProductController@store');
 });
+
+//Route::get('cat', 'API\ProductController@index');

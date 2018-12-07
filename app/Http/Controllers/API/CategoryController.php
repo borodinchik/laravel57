@@ -2,46 +2,53 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Category;
-use App\Services\CategoryHelper;
+//use App\Category;
+use App\Services\CategoryService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Http\Requests\Category as CategoryRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
+use App\Http\Requests\Category as CategoryRequest;
 
 class CategoryController extends Controller
 {
-    /**
-     * @param CategoryHelper $categoryHelper
-     * @param bool $slug
-     * @return object
-     */
-    public function index(CategoryHelper $categoryHelper, $slug = false) : object
+    protected $category;
+
+    public function __construct(CategoryService $service)
     {
-        return $categoryHelper->getCategory($slug);
+        $this->category = $service;
     }
 
-    public function show($id, $slug = false, CategoryHelper $categoryHelper)
+    /**
+     * @param bool $slug
+     * @return JsonResponse
+     */
+    public function index($slug = false) : JsonResponse
     {
-        return $categoryHelper->getCategoryById($id, $slug);
+        return $this->category->getCategory($slug);
+    }
+
+    /**
+     * @param $id
+     * @param bool $slug
+     * @return mixed
+     */
+    public function show($id, $slug = false)
+    {
+        return $this->category->getCategoryById($id, $slug);
     }
 
     /**
      * @param CategoryRequest $request
-     * @param CategoryHelper $categoryHelper
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function store(CategoryRequest $request, CategoryHelper $categoryHelper) : object
+    public function store(CategoryRequest $request)
     {
-        return $categoryHelper->createNewCategory($request);
+        return $this->category->createNewCategory($request);
     }
 
-    /**
-     * @param Request $request
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function update(Request $request, $id) : object
+
+    public function update(Request $request, $id)
     {
         $category = Category::findOrFail($id);
         $category->update($request->all());
@@ -51,11 +58,8 @@ class CategoryController extends Controller
             ], Response::HTTP_CREATED);
     }
 
-    /**
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function destroy($id) : object
+
+    public function destroy($id)
     {
         $category = Category::findOrFail($id);
         $category->delete();
