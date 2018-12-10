@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vova
- * Date: 12/5/18
- * Time: 12:26 PM
- */
 
 namespace App\Services;
 
@@ -28,14 +22,18 @@ class ProductService implements ICrud
             ], Response::HTTP_OK);
     }
 
-    public function saveNewObj($request)
+    /**
+     * @param $data
+     * @return JsonResponse
+     */
+    public function saveNewObj($data) : JsonResponse
     {
         $product = new Product();
-        $product->name = $request->name;
-        $product->slug = $request->slug;
-        $product->description = $request->description;
-        $product->image = $request->image;
-        $product->type = $request->type;
+        $product->name = $data['request']->name;
+        $product->slug = $data['request']->slug;
+        $product->description = $data['request']->description;
+        $product->image = $data['image'];
+        $product->type = $data['request']->type;
         $product->save();
 
         return response()->json(
@@ -44,18 +42,40 @@ class ProductService implements ICrud
             ], Response::HTTP_CREATED);
     }
 
-    public function getObjById(int $id)
+    /**
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function getObjById(int $id) : JsonResponse
     {
-        // TODO: Implement show() method.
+        $product = Product::findOrFail($id);
+        return response()->json(
+            [
+                "product_({$id})" => $product
+            ], Response::HTTP_OK);
     }
 
-    public function updateObj(int $id)
+    /**
+     * @param $data
+     * @return JsonResponse
+     */
+    public function updateObj($data) : JsonResponse
     {
-        // TODO: Implement update() method.
+        $product = Product::findOrFail($data['id']);
+        $product->name = $data['request']->name;
+        $product->slug = $data['request']->slug;
+        $product->description = $data['request']->description;
+        $product->image = $data['image'];
+        $product->update();
+
+        return response()->json(
+            [
+                "product_({$data['id']})" => "Product  Updated!"
+            ]);
     }
 
-    public function deleteObj(int $id)
+    public function deleteObj(int $int)
     {
-        // TODO: Implement delete() method.
+        // TODO: Implement deleteObj() method.
     }
 }

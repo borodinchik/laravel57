@@ -13,11 +13,11 @@ interface ICrud
 {
     public function getCollection();
 
-    public function saveNewObj($request);
+    public function saveNewObj($data);
 
     public function getObjById(int $id);
 
-    public function updateObj(int $id);
+    public function updateObj($data);
 
     public function deleteObj(int $int);
 }

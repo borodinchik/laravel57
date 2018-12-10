@@ -9,7 +9,7 @@
 namespace App\Services;
 
 
-//use App\Category;
+use App\Category;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
@@ -91,10 +91,5 @@ class  CategoryService
         $categoryAndChildren = Category::with('children')->findOrFail($id);
         $result = ($slug == true) ? $categoryAndChildren : $category;
         return response()->json(['category' => $result], Response::HTTP_OK);
-    }
-
-    public function hello($str)
-    {
-        return $str;
     }
 }
