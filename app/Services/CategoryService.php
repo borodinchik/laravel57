@@ -67,7 +67,7 @@ class  CategoryService
     public function createNewCategory($request) : JsonResponse
     {
         $category = new Category();
-        $category->title = $request->title;
+        $category->title = (string)$request->title;
 
         $category->parent_id = ($request->parent_id)
             ? (Category::findOrFail($request->parent_id))->id

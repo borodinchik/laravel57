@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Product;
 use App\Services\FileService;
 use App\Services\ProductService;
 use Illuminate\Http\JsonResponse;
@@ -50,11 +51,11 @@ class ProductController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param ProductRequest $request
      * @param int $id
      * @return JsonResponse
      */
-    public function update(Request $request, int $id) : JsonResponse
+    public function update(ProductRequest $request, int $id) : JsonResponse
     {
         $img = $this->file->getFileName($request);
         $data = ['image' => $img, 'request' => $request, 'id' => $id];
@@ -63,6 +64,6 @@ class ProductController extends Controller
 
     public function destroy(int $id)
     {
-        return $this->product->deleteObj($id);
+//        return $this->product->deleteObj($id);
     }
 }

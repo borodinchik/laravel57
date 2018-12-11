@@ -19,5 +19,5 @@ interface ICrud
 
     public function updateObj($data);
 
-    public function deleteObj(int $int);
+    public function deleteObj(int $id);
 }

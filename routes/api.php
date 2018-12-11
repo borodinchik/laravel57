@@ -45,4 +45,22 @@ Route::group(['prefix' => 'product'], function()
     Route::post('/create', 'API\ProductController@store');
     Route::post('update/{id}', 'API\ProductController@update');
 //    Route::delete('delete/{id}', 'API\ProductController@destroy');
+
+    Route::group(['prefix' => 'variation'], function ()
+    {
+        Route::get('/all', 'API\VariationController@index');
+        Route::get('/{id}', 'API\VariationController@show');
+        Route::post('/create', 'API\VariationController@store');
+        Route::post('/{id}', 'API\VariationController@update');
+
+        Route::group(['prefix' => 'specification'], function ()
+        {
+            Route::get('/all', 'API\SpecificationController@index');
+            Route::get('/{id}', 'API\SpecificationController@show');
+            Route::post('/create', 'API\SpecificationController@store');
+            Route::post('/update', 'API\SpecificationController@update');
+            Route::delete('/delete/{id}', 'API\SpecificationController@destroy');
+
+        });
+    });
 });

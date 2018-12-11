@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
-//use App\Category;
+use App\Category;
 use App\Services\CategoryService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use App\Http\Requests\Category as CategoryRequest;
@@ -29,11 +28,11 @@ class CategoryController extends Controller
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @param bool $slug
-     * @return mixed
+     * @return JsonResponse
      */
-    public function show($id, $slug = false)
+    public function show(int $id, $slug = false) : JsonResponse
     {
         return $this->category->getCategoryById($id, $slug);
     }
@@ -42,13 +41,17 @@ class CategoryController extends Controller
      * @param CategoryRequest $request
      * @return JsonResponse
      */
-    public function store(CategoryRequest $request)
+    public function store(CategoryRequest $request) : JsonResponse
     {
         return $this->category->createNewCategory($request);
     }
 
-
-    public function update(Request $request, $id)
+    /**
+     * @param CategoryRequest $request
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function update(CategoryRequest $request, int $id) : JsonResponse
     {
         $category = Category::findOrFail($id);
         $category->update($request->all());
@@ -58,8 +61,11 @@ class CategoryController extends Controller
             ], Response::HTTP_CREATED);
     }
 
-
-    public function destroy($id)
+    /**
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function destroy(int $id) : JsonResponse
     {
         $category = Category::findOrFail($id);
         $category->delete();

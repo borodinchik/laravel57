@@ -171,6 +171,8 @@ return [
          */
         App\Providers\CategoryServiceProvider::class,
         App\Providers\ProductServiceProvider::class,
+        App\Providers\VariationServiceProvider::class,
+        App\Providers\SpecificationServiceProvider::class,
         /*
          * Application Service Providers...
          */
