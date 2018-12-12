@@ -18,7 +18,7 @@ class CreateVariationsTable extends Migration
             $table->string('sku');
             $table->string('image');
             $table->integer('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('products');
+//            $table->foreign('product_id')->references('id')->on('products');
             $table->decimal('price');
             $table->integer('in_stock');
             $table->timestamps();

@@ -16,6 +16,9 @@ class Product extends Model
         'type'
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function variations()
     {
         return $this->hasMany(Variation::class);

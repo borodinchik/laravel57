@@ -16,10 +16,10 @@ class CreateSpecificationsTable extends Migration
         Schema::create('specifications', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('variation_id')->unsigned();
-            $table->foreign('variation_id')
-                ->references('id')->on('variations')
-                ->onDelete('restrict')
-                ->onUpdate('cascade');
+//            $table->foreign('variation_id')
+//                ->references('id')->on('variations')
+//                ->onDelete('restrict')
+//                ->onUpdate('cascade');
             $table->string('attribute');
             $table->string('value');
             $table->timestamps();

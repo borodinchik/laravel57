@@ -10,10 +10,13 @@ use Illuminate\Http\Response;
 
 class ProductService implements ICrud
 {
+    const NORMAL_PRODUCT = 0;
+    const PRODUCT_WITH_VARIATIONS = 1;
+
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getCollection() : JsonResponse
+    public function getCollection(): JsonResponse
     {
         $products = Product::all();
         return response()->json(
@@ -28,6 +31,7 @@ class ProductService implements ICrud
      */
     public function saveNewObj($data) : JsonResponse
     {
+
         $product = new Product();
         $product->name = (string)$data['request']->name;
         $product->slug = (string)$data['request']->slug;
@@ -62,10 +66,10 @@ class ProductService implements ICrud
     public function updateObj($data) : JsonResponse
     {
         $product = Product::findOrFail($data['id']);
-        $product->name = $data['request']->name;
-        $product->slug = $data['request']->slug;
-        $product->description = $data['request']->description;
-        $product->image = $data['image'];
+        $product->name = (string)$data['request']->name;
+        $product->slug = (string)$data['request']->slug;
+        $product->description = (string)$data['request']->description;
+        $product->image = (string)$data['image'];
         $product->update();
 
         return response()->json(

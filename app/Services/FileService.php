@@ -20,7 +20,7 @@ class FileService
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->move(storage_path() . '/img/', $fileName);
+            $file->move(storage_path() . '/uploads/', $fileName);
         }
         return $fileName;
     }

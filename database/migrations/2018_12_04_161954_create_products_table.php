@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('slug');
             $table->text('description');
             $table->string('image');
-            $table->integer('type');
+            $table->boolean('type');
             $table->timestamps();
         });
     }
