@@ -27,7 +27,8 @@ class Product extends FormRequest
             'name' => 'required|string',
             'slug' => 'required|string',
             'description' => 'required|string',
-            'image' => 'required|mimes:jpeg,jpg,png',
+            'image' => 'required',
+            'image.*' => 'mimes:jpeg,jpg,png',
             'type' => 'required|numeric'
         ];
     }

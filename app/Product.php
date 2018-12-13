@@ -12,7 +12,6 @@ class Product extends Model
         'name',
         'slug',
         'description',
-        'image',
         'type'
     ];
 
@@ -22,6 +21,14 @@ class Product extends Model
     public function variations()
     {
         return $this->hasMany(Variation::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function productImage()
+    {
+        return $this->hasMany(ProductImage::class);
     }
 }
 

@@ -4,6 +4,7 @@ namespace App\Services;
 
 
 use App\Product;
+use App\ProductImage;
 use App\Services\Interfaces\ICrud;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -31,15 +32,21 @@ class ProductService implements ICrud
      */
     public function saveNewObj($data) : JsonResponse
     {
-
         $product = new Product();
         $product->name = (string)$data['request']->name;
         $product->slug = (string)$data['request']->slug;
         $product->description = (string)$data['request']->description;
-        $product->image = (string)$data['image'];
         $product->type = (int)$data['request']->type;
         $product->save();
 
+        if (! empty($product->id) && ! empty($data['image'])) {
+            $productImages = new ProductImage();
+            $productImages->product_id = $product->id;
+            foreach ($data['image'] as $image) {
+                $productImages->image = $image;
+            }
+        }
+        $productImages->save();
         return response()->json(
             [
                 'data' => "New product {$product->name} Created!"

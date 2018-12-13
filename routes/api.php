@@ -45,7 +45,7 @@ Route::group(['prefix' => 'product'], function()
     Route::post('/create', 'API\ProductController@store');
     Route::post('update/{id}', 'API\ProductController@update');
 //    Route::delete('delete/{id}', 'API\ProductController@destroy');
-    Route::post('/upload/{product_id}', 'API\ProductController@upload');
+    Route::post('/upload', 'API\ProductController@upload');
 
     Route::group(['prefix' => 'variation'], function ()
     {

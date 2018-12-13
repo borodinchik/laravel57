@@ -1,27 +1,24 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vova
- * Date: 11/23/18
- * Time: 12:49 PM
- */
 
 namespace App\Services;
 
+use App\Services\Interfaces\IFile;
 
-class FileService
+class FileService implements IFile
 {
     /**
      * @param $request
-     * @return string
+     * @return array
      */
-    public function getFileName($request) : string
+    public function getFileName($request) : array
     {
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->move(storage_path() . '/uploads/', $fileName);
+        $productImages = [];
+        $images = $request->file("image");
+        foreach ($images as $key => $image) {
+            $fileName = time() . '_' . "{$request->name}" . '_'.  $image->getClientOriginalName();
+            $image->move(storage_path() . '/uploads_product/' . "{$request->name}", $fileName);
+            array_push($productImages, $fileName);
         }
-        return $fileName;
+        return $productImages;
     }
 }
