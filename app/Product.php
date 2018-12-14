@@ -12,6 +12,7 @@ class Product extends Model
         'name',
         'slug',
         'description',
+        'category_id',
         'type'
     ];
 
@@ -29,6 +30,14 @@ class Product extends Model
     public function productImage()
     {
         return $this->hasMany(ProductImage::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function categories()
+    {
+        return $this->belongsTo(Category::class);
     }
 }
 

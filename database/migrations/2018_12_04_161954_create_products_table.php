@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('slug');
             $table->text('description');
+            $table->integer('category_id')->index();
             $table->boolean('type');
             $table->timestamps();
         });

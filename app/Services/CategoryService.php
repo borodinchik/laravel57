@@ -41,7 +41,7 @@ class  CategoryService
      * @param $slug
      * @return JsonResponse
      */
-    public function getCategory($slug) : JsonResponse
+    public function getCategory($slug)
     {
         $categories = Category::all();
 
