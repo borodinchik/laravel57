@@ -9,17 +9,23 @@ class Variation extends Model
     protected $table = 'variations';
     protected $fillable = [
         'sku',
-        'image',
+//        'image',
         'product_id',
         'price',
         'stock'
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function specifications()
     {
         return $this->hasMany(Specification::class);

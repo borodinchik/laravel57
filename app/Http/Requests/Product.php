@@ -25,7 +25,6 @@ class Product extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'slug' => 'required|string',
             'description' => 'required|string',
             'image' => 'required',
             'image.*' => 'mimes:jpeg,jpg,png',

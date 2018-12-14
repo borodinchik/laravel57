@@ -12,8 +12,9 @@ namespace App\Services\Interfaces;
 interface IFile
 {
     /**
-     * Return one file name
      * @param $request
+     * @param null $slug
+     * @return mixed
      */
-    public function getFileName($request);
+    public function getFileName($request, $slug = null);
 }

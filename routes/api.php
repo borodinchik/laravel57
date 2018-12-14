@@ -65,3 +65,5 @@ Route::group(['prefix' => 'product'], function()
         });
     });
 });
+
+Route::get('test', 'TestController@test');

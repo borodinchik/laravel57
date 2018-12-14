@@ -16,7 +16,7 @@ class CreateVariationsTable extends Migration
         Schema::create('variations', function (Blueprint $table) {
             $table->increments('id');
             $table->string('sku');
-            $table->string('image');
+//            $table->string('image');
             $table->integer('product_id')->unsigned();
 //            $table->foreign('product_id')->references('id')->on('products');
             $table->decimal('price');

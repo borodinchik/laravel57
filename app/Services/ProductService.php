@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-
 use App\Product;
 use App\ProductImage;
 use App\Services\Interfaces\ICrud;
@@ -34,19 +33,34 @@ class ProductService implements ICrud
     {
         $product = new Product();
         $product->name = (string)$data['request']->name;
-        $product->slug = (string)$data['request']->slug;
+        $product->slug = (string)$data['slug'];
         $product->description = (string)$data['request']->description;
         $product->type = (int)$data['request']->type;
         $product->save();
 
-        if (! empty($product->id) && ! empty($data['image'])) {
-            $productImages = new ProductImage();
-            $productImages->product_id = $product->id;
-            foreach ($data['image'] as $image) {
-                $productImages->image = $image;
+//        if ($product->type == self::NORMAL_PRODUCT) {
+            if (! empty($product->id) && ! empty($data['image'])) {
+                $productImages = new ProductImage();
+                $productImages->product_id = $product->id;
+                foreach ($data['image'] as $image) {
+                    $productImages->image = $image;
+                }
+//            }
+            $productImages->save();
+
+        } elseif ($product->type == self::PRODUCT_WITH_VARIATIONS) {
+            if (! empty($product->id) && ! empty($data['image'])) {
+                $productImages = new ProductImage();
+                $productImages->product_id = $product->id;
+                foreach ($data['image'] as $image) {
+                    $productImages->image = $image;
+                }
             }
+
+
+
         }
-        $productImages->save();
+
         return response()->json(
             [
                 'data' => "New product {$product->name} Created!"

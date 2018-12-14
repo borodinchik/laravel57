@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product;
+use App\Letters;
 use App\Services\FileService;
 use App\Services\ProductService;
 use Illuminate\Http\JsonResponse;
@@ -12,6 +13,7 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    use Letters;
     protected $product;
     protected $file;
 
@@ -35,8 +37,10 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request) : JsonResponse
     {
-        $img = $this->file->getFileName($request);
-        $data = ['image' => $img, 'request' => $request];
+        $productName = $this->getChangedWords($request->name);
+        $slug =  $this->getSlug($productName);
+        $img = $this->file->getFileName($request, $slug );
+        $data = ['image' => $img, 'request' => $request, 'slug' => $slug];
         return $this->product->saveNewObj($data);
 
     }
