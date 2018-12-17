@@ -5,10 +5,11 @@ namespace App\Services;
 use App\Product;
 use App\ProductImage;
 use App\Services\Interfaces\ICrud;
+use App\Services\Interfaces\IQuery;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
-class ProductService implements ICrud
+class ProductService implements ICrud, IQuery
 {
     const NORMAL_PRODUCT = 0;
     const PRODUCT_WITH_VARIATIONS = 1;
@@ -36,6 +37,7 @@ class ProductService implements ICrud
         $product->slug = (string)$data['slug'];
         $product->description = (string)$data['request']->description;
         $product->type = (int)$data['request']->type;
+        $product->category_id = (int)$data['request']->category_id;
         $product->save();
 
 //        if ($product->type == self::NORMAL_PRODUCT) {
@@ -48,14 +50,14 @@ class ProductService implements ICrud
 //            }
             $productImages->save();
 
-        } elseif ($product->type == self::PRODUCT_WITH_VARIATIONS) {
-            if (! empty($product->id) && ! empty($data['image'])) {
-                $productImages = new ProductImage();
-                $productImages->product_id = $product->id;
-                foreach ($data['image'] as $image) {
-                    $productImages->image = $image;
-                }
-            }
+//        } elseif ($product->type == self::PRODUCT_WITH_VARIATIONS) {
+//            if (! empty($product->id) && ! empty($data['image'])) {
+//                $productImages = new ProductImage();
+//                $productImages->product_id = $product->id;
+//                foreach ($data['image'] as $image) {
+//                    $productImages->image = $image;
+//                }
+//            }
 
 
 
@@ -102,5 +104,18 @@ class ProductService implements ICrud
     public function deleteObj(int $int)
     {
         // TODO: Implement deleteObj() method.
+    }
+
+    /**
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function relationshipWith(int $id)
+    {
+        $productWithVariationsAndSpecifications = Product::with('variations.specifications')->findOrFail($id);
+        return response()->json(
+            [
+                'data' => $productWithVariationsAndSpecifications
+            ], Response::HTTP_OK);
     }
 }

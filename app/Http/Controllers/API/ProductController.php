@@ -9,7 +9,6 @@ use App\Services\FileService;
 use App\Services\ProductService;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\Product as ProductRequest;
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -69,5 +68,14 @@ class ProductController extends Controller
     public function destroy(int $id)
     {
 //        return $this->product->deleteObj($id);
+    }
+
+    /**
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function getProductWithVariationsWithSpecifications(int $id)
+    {
+        return $this->product->relationshipWith($id);
     }
 }

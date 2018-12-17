@@ -71,4 +71,18 @@ class CategoryController extends Controller
         $category->delete();
         return response()->json(null,  Response::HTTP_NO_CONTENT);
     }
+
+    /**
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function getCategoryWithProducts(int $id)
+    {
+        return $this->category->relationshipWith($id);
+    }
+
+    public function getCategoryWithProductsAndVarSpec(int $id)
+    {
+        return $this->category->getManyRelationshipById($id);
+    }
 }

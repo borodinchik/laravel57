@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -33,6 +31,7 @@ Route::group(['prefix' => 'category'], function ()
 {
     Route::get('all/{slug?}', 'API\CategoryController@index');
     Route::get('/{id}/{slug?}', 'API\CategoryController@show');
+    Route::get('category/{id}/all_products', 'API\CategoryController@getCategoryWithProducts');
     Route::post('create', 'API\CategoryController@store');
     Route::post('update/{id}', 'API\CategoryController@update');
     Route::delete('delete/{id}', 'API\CategoryController@destroy');
@@ -42,6 +41,7 @@ Route::group(['prefix' => 'product'], function()
 {
     Route::get('/all', 'API\ProductController@index');
     Route::get('/{id}', 'API\ProductController@show');
+    Route::get('/{id}/variations/specifications', 'API\ProductController@getProductWithVariationsWithSpecifications');
     Route::post('/create', 'API\ProductController@store');
     Route::post('update/{id}', 'API\ProductController@update');
 //    Route::delete('delete/{id}', 'API\ProductController@destroy');

@@ -1,19 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vova
- * Date: 11/30/18
- * Time: 11:42 AM
- */
 
 namespace App\Services;
 
 
 use App\Category;
+use App\Services\Interfaces\IQuery;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
-class  CategoryService
+class  CategoryService implements IQuery
 {
     const CATEGORY_LIST = 'list';
     const CATEGORY_TREE = 'tree';
@@ -92,4 +87,18 @@ class  CategoryService
         $result = ($slug == true) ? $categoryAndChildren : $category;
         return response()->json(['category' => $result], Response::HTTP_OK);
     }
+
+    /**
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function relationshipWith(int $id)
+    {
+        $categoryWithProducts = Category::with('products')->findOrFail($id);
+        return response()->json(
+            [
+                'category_with_products' => $categoryWithProducts
+            ], Response::HTTP_OK);
+    }
 }
+
