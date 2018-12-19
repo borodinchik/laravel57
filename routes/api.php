@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,6 +18,7 @@
 Route::group(['prefix' => 'auth'], function ()
 {
     Route::post('login', 'API\AuthController@login');
+    
 //    Route::post('signup', 'API\AuthController@signUp');
 });
 
@@ -65,5 +66,3 @@ Route::group(['prefix' => 'product'], function()
         });
     });
 });
-
-Route::get('test', 'TestController@test');

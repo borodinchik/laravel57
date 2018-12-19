@@ -20,6 +20,7 @@ class ProductController extends Controller
     {
         $this->product = $service;
         $this->file = $fileService;
+        $this->middleware('auth:api', ['only' => ['store', 'update', 'destroy']]);
     }
 
     /**
