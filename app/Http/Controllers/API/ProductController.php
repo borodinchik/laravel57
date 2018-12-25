@@ -20,7 +20,7 @@ class ProductController extends Controller
     {
         $this->product = $service;
         $this->file = $fileService;
-        $this->middleware('auth:api', ['only' => ['store', 'update', 'destroy']]);
+//        $this->middleware('auth:api', ['only' => ['store', 'update', 'destroy']]);
     }
 
     /**
@@ -39,7 +39,7 @@ class ProductController extends Controller
     {
         $productName = $this->getChangedWords($request->name);
         $slug =  $this->getSlug($productName);
-        $img = $this->file->getFileName($request, $slug );
+        $img = $this->file->getFileName($request, $slug);
         $data = ['image' => $img, 'request' => $request, 'slug' => $slug];
         return $this->product->saveNewObj($data);
 
@@ -61,8 +61,10 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, int $id) : JsonResponse
     {
-        $img = $this->file->getFileName($request);
-        $data = ['image' => $img, 'request' => $request, 'id' => $id];
+        $productName = $this->getChangedWords($request->name);
+        $slug =  $this->getSlug($productName);
+        $img = $this->file->getFileName($request, $slug);
+        $data = ['image' => $img, 'request' => $request, 'id' => $id, 'slug' => $slug];
         return $this->product->updateObj($data);
     }
 

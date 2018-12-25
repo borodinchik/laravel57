@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
+use App\User;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
@@ -10,38 +12,35 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-//    /**
-//     * Create user
-//     *
-//     * @param  [string] name
-//     * @param  [string] email
-//     * @param  [string] password
-//     * @param  [string] password_confirmation
-//     * @return [string] message
-//     */
-//    public function signup(Request $request)
-//    {
-//        $request->validate([
-//            'name' => 'required|string',
-//            'email' => 'required|string|email|unique:users',
-//            'password' => 'required|string|confirmed'
-//        ]);
-//        $user = new User([
-//            'name' => $request->name,
-//            'email' => $request->email,
-//            'password' => bcrypt($request->password)
-//        ]);
-//        $user->save();
-//        return response()->json([
-//            'message' => 'Successfully created user!'
-//        ], 201);
-//    }
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function signup(Request $request) : JsonResponse
+    {
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|string|email|unique:users',
+            'password' => 'required|string|confirmed',
+        ]);
+        $user = new User(
+            [
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+                'is_admin' => 0,
+            ]);
+        $user->save();
+        return response()->json([
+            'message' => 'Successfully created user!'
+        ], Response::HTTP_OK);
+    }
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function login(Request $request) : object
+    public function login(Request $request) : JsonResponse
     {
         $request->validate(
             [
@@ -75,9 +74,9 @@ class AuthController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function logout(Request $request) : object
+    public function logout(Request $request) : JsonResponse
     {
         $request->user()->token()->revoke();
         return response()->json(
@@ -88,9 +87,9 @@ class AuthController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function admin(Request $request) : object
+    public function admin(Request $request) : JsonResponse
     {
         return response()->json($request->user());
     }

@@ -14,7 +14,6 @@ class SpecificationController extends Controller
     public function __construct(SpecificationService $service)
     {
         $this->specification = $service;
-        $this->middleware('auth:api', ['store', 'update', 'destroy']);
     }
 
     /**

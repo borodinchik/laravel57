@@ -18,7 +18,7 @@ class VariationController extends Controller
     {
         $this->file = $fileService;
         $this->variation = $service;
-        $this->middleware('auth:api', ['store', 'update']);
+//        $this->middleware('auth:api', ['store', 'update']);
 
     }
 

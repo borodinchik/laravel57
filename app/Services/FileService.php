@@ -17,7 +17,7 @@ class FileService implements IFile
     {
         $productImages = [];
         $images = $request->file("image");
-        foreach ($images as $key => $image) {
+        foreach ($images as $image) {
             $fileName = time() . '_' . "{$slug}" . '_'.  $image->getClientOriginalName();
             $image->move(storage_path() . '/uploads_product/' . "{$slug}", $fileName);
             array_push($productImages, $fileName);
