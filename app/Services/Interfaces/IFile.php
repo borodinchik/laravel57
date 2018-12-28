@@ -13,8 +13,9 @@ interface IFile
 {
     /**
      * @param $request
-     * @param null $slug
      * @return mixed
      */
-    public function getFileName($request, $slug = null);
+    public function getFileName($request);
+
+    public function updateImages(array $data);
 }

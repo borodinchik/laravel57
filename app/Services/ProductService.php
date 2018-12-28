@@ -97,6 +97,8 @@ class ProductService implements ICrud, IQuery
         $product->category_id = (int)$data['request']->category_id;
         $product->type = (int)$data['request']->type;
 
+        $pro = ProductImage::getProductImageById($data['imageId'], $data['productId']);
+
 //        if (! empty($product->id) && $data['image']) {
 //            $imageProduct = ProductImage::where('id', $)->get();
 //

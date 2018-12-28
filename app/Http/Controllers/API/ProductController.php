@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Product;
+use App\Http\{Controllers\Controller, Requests\Product as ProductRequest};
 use App\Letters;
-use App\Services\FileService;
-use App\Services\ProductService;
+use App\Services\{FileService, ProductService};
 use Illuminate\Http\JsonResponse;
-use App\Http\Requests\Product as ProductRequest;
 
 class ProductController extends Controller
 {

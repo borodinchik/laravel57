@@ -71,10 +71,10 @@ Route::post('register', 'API\AuthController@signup');
         });
         Route::group(['prefix' => 'product'], function () {
             Route::post('/create', 'API\ProductController@store');
-            Route::post('update/{id}', 'API\ProductController@update');
+            Route::post('/{id}/{image_id}', 'API\ProductImageController@updateImage');
 //    Route::delete('delete/{id}', 'API\ProductController@destroy');
             Route::post('/upload', 'API\ProductController@upload');
-            Route::post('/{id}/image/{id}', 'API\ProductImageController@update');
+            Route::post('/{id}/update/{image_id}', 'API\ProductImageController@updateImage');
 
             Route::group(['prefix' => 'variation'], function () {
                 Route::post('/create', 'API\VariationController@store');
@@ -89,6 +89,8 @@ Route::post('register', 'API\AuthController@signup');
         });
     });
 //}]);
+
+//Route::post('products/{id}/{image_id}', 'TestController@update');
 
 
 

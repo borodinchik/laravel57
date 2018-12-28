@@ -39,5 +39,11 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public static function getSlugByProductId(int $productId)
+    {
+        $slug = Product::findOrfail($productId);
+        return $slug;
+    }
 }
 

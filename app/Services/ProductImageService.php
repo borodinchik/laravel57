@@ -10,32 +10,10 @@ namespace App\Services;
 
 
 use App\Services\Interfaces\ICrud;
+use App\Services\Interfaces\IFile;
 
-class ProductImageService implements ICrud
+class ProductImageService
 {
 
-    public function getCollection()
-    {
-        // TODO: Implement getCollection() method.
-    }
 
-    public function saveNewObj($data)
-    {
-        // TODO: Implement saveNewObj() method.
-    }
-
-    public function getObjById(int $id)
-    {
-        // TODO: Implement getObjById() method.
-    }
-
-    public function updateObj($data)
-    {
-        $d = $data;
-    }
-
-    public function deleteObj(int $id)
-    {
-        // TODO: Implement deleteObj() method.
-    }
 }

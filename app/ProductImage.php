@@ -14,6 +14,12 @@ class ProductImage extends Model
         return $this->belongsTo(Product::class);
     }
 
+    public static function getProductImageById(int $imageId, int $productId)
+    {
+         $image = ProductImage::where('id', $imageId)->where('product_id', $productId)->first();
+         return $image;
+    }
+
 
 
 }
