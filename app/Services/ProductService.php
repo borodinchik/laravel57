@@ -2,12 +2,9 @@
 
 namespace App\Services;
 
-use App\Product;
-use App\ProductImage;
-use App\Services\Interfaces\ICrud;
-use App\Services\Interfaces\IQuery;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
+use App\{Product, ProductImage};
+use App\Services\Interfaces\{ICrud, IQuery};
+use Illuminate\Http\{JsonResponse, Response};
 
 class ProductService implements ICrud, IQuery
 {
@@ -40,9 +37,6 @@ class ProductService implements ICrud, IQuery
         $product->category_id = (int)$data['request']->category_id;
         $product->save();
 
-//        if ($product->type == self::NORMAL_PRODUCT) {
-
-
         if (!empty($product->id) && !empty($data['image'])) {
             foreach ($data['image'] as $image) {
                 $productImages = new ProductImage();
@@ -50,19 +44,6 @@ class ProductService implements ICrud, IQuery
                 $productImages->product_id = $product->id;
                 $productImages->save();
             }
-//            }
-
-
-//        } elseif ($product->type == self::PRODUCT_WITH_VARIATIONS) {
-//            if (! empty($product->id) && ! empty($data['image'])) {
-//                $productImages = new ProductImage();
-//                $productImages->product_id = $product->id;
-//                foreach ($data['image'] as $image) {
-//                    $productImages->image = $image;
-//                }
-//            }
-
-
         }
 
         return response()->json(
@@ -96,20 +77,6 @@ class ProductService implements ICrud, IQuery
         $product->description = (string)$data['request']->description;
         $product->category_id = (int)$data['request']->category_id;
         $product->type = (int)$data['request']->type;
-
-        $pro = ProductImage::getProductImageById($data['imageId'], $data['productId']);
-
-//        if (! empty($product->id) && $data['image']) {
-//            $imageProduct = ProductImage::where('id', $)->get();
-//
-//                foreach ($imageProduct->all() as $imageP) {
-//                    foreach ($data['image'] as $imageRequest) {
-//                    $imageP->image = $imageRequest;
-//                    $imageP->update();
-//                }
-//
-//            }
-//        }
         $product->update();
 
             return response()->json(

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\{Controllers\Controller, Requests\Product as ProductRequest};
+use App\Http\{Controllers\Controller,
+    Requests\Product as ProductRequest,
+    Requests\ProductUpdateRequest as UProductRequest};
 use App\Letters;
 use App\Services\{FileService, ProductService};
 use Illuminate\Http\JsonResponse;
@@ -52,16 +54,15 @@ class ProductController extends Controller
     }
 
     /**
-     * @param ProductRequest $request
+     * @param UProductRequest $request
      * @param int $id
      * @return JsonResponse
      */
-    public function update(ProductRequest $request, int $id) : JsonResponse
+    public function update(UProductRequest $request, int $id) : JsonResponse
     {
         $productName = $this->getChangedWords($request->name);
         $slug =  $this->getSlug($productName);
-        $img = $this->file->getFileName($request, $slug);
-        $data = ['image' => $img, 'request' => $request, 'id' => $id, 'slug' => $slug];
+        $data = ['request' => $request, 'id' => $id, 'slug' => $slug];
         return $this->product->updateObj($data);
     }
 

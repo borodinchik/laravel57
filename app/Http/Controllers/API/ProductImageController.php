@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Requests\ProductImageUpdateRequest as UProductImage;
 use App\Services\{FileService, ProductService};
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ProductImageController extends Controller
@@ -18,12 +18,12 @@ class ProductImageController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param UProductImage $request
      * @param int $productId
      * @param int $imageId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function updateImage(Request $request, int $productId, int $imageId)
+    public function updateImage(UProductImage $request, int $productId, int $imageId)
     {
         return $this->file->updateImages($request, $data = ['productId' => $productId, 'imageId' => $imageId]);
     }
