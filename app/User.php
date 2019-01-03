@@ -9,9 +9,9 @@ use Laravel\Passport\HasApiTokens;
 class User extends Authenticatable
 {
     use Notifiable, HasApiTokens;
-    protected $casts = [
-        'is_admin' => 'boolean'
-    ];
+//    protected $casts = [
+//        'is_admin' => 'boolean'
+//    ];
     /**
      * The attributes that are mass assignable.
      *
