@@ -17,10 +17,14 @@ class ProductImageController extends Controller
         $this->product = $service;
     }
 
+    /**
+     * @param Request $request
+     * @param int $productId
+     * @param int $imageId
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateImage(Request $request, int $productId, int $imageId)
     {
-        $img =  $this->file->getFileName($request);
-        $data = ['image' => $img, 'productId' => $productId, 'imageId' => $imageId];
-        return $this->file->updateImages($data);
+        return $this->file->updateImages($request, $data = ['productId' => $productId, 'imageId' => $imageId]);
     }
 }

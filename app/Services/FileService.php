@@ -14,36 +14,32 @@ class FileService implements IFile
 
     /**
      * @param $request
+     * @param $slug
      * @return array
      */
-    public function getFileName($request) : array
+    public function getFileName($request, $slug) : array
     {
         $productImages = [];
         $images = $request->file("image");
-        if (count($images) > 1) {
             foreach ($images as $image) {
                 $fileName = time() . '_' . '_' . $image->getClientOriginalName();
-                $image->move(storage_path() . '/uploads_product/' . "File_slug", $fileName);
+                $image->move(storage_path() . '/uploads_product/' . $slug, $fileName);
                 array_push($productImages, $fileName);
             }
-        } else {
-            $image = $images;
-            $fileName = time() . '_' . '_' . $image->getClientOriginalName();
-            $image->move(storage_path() . '/uploads_product/' . "File_slug", $fileName);
-            array_push($productImages, $fileName);
-        }
         return $productImages;
     }
 
     /**
+     * @param $request
      * @param array $data
      * @return \Illuminate\Http\JsonResponse
      */
-    public function updateImages(array $data)
+    public function updateImages($request, array $data)
     {
        $result = ProductImage::getProductImageById($data['imageId'], $data['productId']);
-       $image = (string)$data['image'][0];
-       $result->image = $image;
+       $product = Product::where('id', $data['productId'])->first();
+       $fileName = $this->getFileName($request, $product->slug);
+       $result->image = $fileName[0];
        $result->update();
 
        return response()->json(['message' => 'Image Updated'], Response::HTTP_CREATED);
